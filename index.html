@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Master - Advanced To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📋 Task Master</h1>
+                <p class="subtitle">Stay organized and productive</p>
+            </div>
+            <div class="header-actions">
+                <button id="darkModeBtn" class="btn-icon" title="Toggle Dark Mode">🌙</button>
+                <button id="settingsBtn" class="btn-icon" title="Settings">⚙️</button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-label">Total</span>
+                <span class="stat-value" id="totalTasks">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Completed</span>
+                <span class="stat-value" id="completedTasks">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Pending</span>
+                <span class="stat-value" id="pendingTasks">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Completion</span>
+                <span class="stat-value" id="completionPercent">0%</span>
+            </div>
+        </div>
+
+        <!-- Add Task Section -->
+        <div class="add-task-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="taskInput" 
+                    class="task-input" 
+                    placeholder="Add a new task..."
+                    autocomplete="off"
+                >
+                <select id="prioritySelect" class="priority-select">
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <button id="addBtn" class="btn btn-primary">+ Add Task</button>
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="high">High Priority</button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="🔍 Search tasks..."
+                autocomplete="off"
+            >
+        </div>
+
+        <!-- Tasks Container -->
+        <main class="tasks-container">
+            <div id="tasksList" class="tasks-list"></div>
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">📝</div>
+                <h2>No tasks yet</h2>
+                <p>Add your first task to get started!</p>
+            </div>
+        </main>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulkActions" style="display: none;">
+            <span id="selectedCount">0 selected</span>
+            <div class="action-buttons">
+                <button id="markCompleteBtn" class="btn btn-small">Mark Complete</button>
+                <button id="markIncompleteBtn" class="btn btn-small">Mark Incomplete</button>
+                <button id="deleteBulkBtn" class="btn btn-small btn-danger">Delete</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Task Master © 2024 | Productivity at your fingertips</p>
+            <div class="footer-links">
+                <a href="#" id="exportBtn">Export</a> | 
+                <a href="#" id="importBtn">Import</a> | 
+                <a href="#" id="clearAllBtn">Clear All</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="notificationsToggle">
+                        Enable Notifications
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="soundToggle">
+                        Sound Effects
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        Sort by:
+                        <select id="sortBy">
+                            <option value="date-newest">Date (Newest First)</option>
+                            <option value="date-oldest">Date (Oldest First)</option>
+                            <option value="priority">Priority</option>
+                            <option value="name">Name (A-Z)</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="autoArchive">
+                        Auto-archive completed tasks
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="closeSettingsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content modal-content-small">
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-danger" id="confirmOk">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
